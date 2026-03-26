@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基隆金證Ｎ — 數位轉型提案 v2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ===================================================
+           CSS CUSTOM PROPERTIES — BOLD SIGNAL THEME
+           ===================================================*/
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-card: #242424;
+            --bg-elevated: #2d2d2d;
+            --accent: #FF5722;
+            --accent-dim: rgba(255, 87, 34, 0.15);
+            --accent-b: #4361ee;
+            --accent-b-dim: rgba(67, 97, 238, 0.15);
+            --accent-c: #27ae60;
+            --accent-c-dim: rgba(39, 174, 96, 0.15);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #606060;
+            --border: rgba(255, 255, 255, 0.08);
+
+            --font-display: 'Archivo Black', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+
+            --title-size: clamp(2.2rem, 6vw, 5.5rem);
+            --h2-size: clamp(1.5rem, 3.5vw, 2.8rem);
+            --h3-size: clamp(1.1rem, 2.2vw, 1.6rem);
+            --body-size: clamp(0.78rem, 1.3vw, 1rem);
+            --small-size: clamp(0.65rem, 1vw, 0.82rem);
+
+            --slide-padding: clamp(1.5rem, 5vw, 5rem);
+            --content-gap: clamp(0.6rem, 1.8vw, 1.8rem);
+            --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ===================================================
+           VIEWPORT BASE — MANDATORY
+           ===================================================*/
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-primary);
+            font-family: var(--font-body);
+            color: var(--text-primary);
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+        }
+
+        :root {
+            --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
+            --h3-size: clamp(1rem, 2.5vw, 1.75rem);
+            --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
+            --small-size: clamp(0.65rem, 1vw, 0.875rem);
+            --slide-padding: clamp(1rem, 4vw, 4rem);
+            --content-gap: clamp(0.5rem, 2vw, 2rem);
+        }
+
+        .card,
+        .container,
+        .content-box {
+            max-width: min(90vw, 1000px);
+            max-height: min(80vh, 700px);
+        }
+
+        .feature-list,
+        .bullet-list {
+            gap: clamp(0.4rem, 1vh, 1rem);
+        }
+
+        .feature-list li,
+        .bullet-list li {
+            font-size: var(--body-size);
+            line-height: 1.4;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        img,
+        .image-container {
+            max-width: 100%;
+            max-height: min(50vh, 400px);
+            object-fit: contain;
+        }
+
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+                --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+                --h2-size: clamp(1rem, 3vw, 1.75rem);
+            }
+        }
+
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+                --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+                --title-size: clamp(1.1rem, 4vw, 2rem);
+                --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+            }
+
+            .nav-dots,
+            .keyboard-hint {
+                display: none;
+            }
+        }
+
+        @media (max-height: 500px) {
+            :root {
+                --slide-padding: clamp(0.4rem, 2vw, 1rem);
+                --title-size: clamp(1rem, 3.5vw, 1.5rem);
+                --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+                --body-size: clamp(0.65rem, 1vw, 0.85rem);
+            }
+        }
+
+        @media (max-width: 600px) {
+            :root {
+                --title-size: clamp(1.25rem, 7vw, 2.5rem);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        /* ===================================================
+           REVEAL ANIMATIONS
+           ===================================================*/
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s var(--ease-expo), transform 0.65s var(--ease-expo);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.65s var(--ease-expo), transform 0.65s var(--ease-expo);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.88);
+            transition: opacity 0.5s var(--ease-expo), transform 0.5s var(--ease-expo);
+        }
+
+        .slide.visible .reveal,
+        .slide.visible .reveal-left,
+        .slide.visible .reveal-scale {
+            opacity: 1;
+            transform: none;
+        }
+
+        .reveal:nth-child(1) {
+            transition-delay: 0.05s;
+        }
+
+        .reveal:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+
+        .reveal:nth-child(3) {
+            transition-delay: 0.25s;
+        }
+
+        .reveal:nth-child(4) {
+            transition-delay: 0.35s;
+        }
+
+        .reveal:nth-child(5) {
+            transition-delay: 0.42s;
+        }
+
+        .reveal:nth-child(6) {
+            transition-delay: 0.48s;
+        }
+
+        .stagger-1 {
+            transition-delay: 0.05s !important;
+        }
+
+        .stagger-2 {
+            transition-delay: 0.15s !important;
+        }
+
+        .stagger-3 {
+            transition-delay: 0.25s !important;
+        }
+
+        .stagger-4 {
+            transition-delay: 0.35s !important;
+        }
+
+        .stagger-5 {
+            transition-delay: 0.42s !important;
+        }
+
+        /* ===================================================
+           PROGRESS BAR
+           ===================================================*/
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: var(--accent);
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        /* ===================================================
+           NAV DOTS
+           ===================================================*/
+        .nav-dots {
+            position: fixed;
+            right: clamp(12px, 2vw, 24px);
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .nav-dot.active {
+            background: var(--accent);
+            height: 18px;
+            border-radius: 3px;
+        }
+
+        .nav-dot:hover {
+            background: var(--text-secondary);
+        }
+
+        /* ===================================================
+           SLIDE NUMBER (top-left badge)
+           ===================================================*/
+        .slide-num {
+            position: absolute;
+            top: var(--slide-padding);
+            left: var(--slide-padding);
+            font-family: var(--font-display);
+            font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            z-index: 10;
+        }
+
+        /* ===================================================
+           SLIDE 01 — TITLE
+           ===================================================*/
+        .title-slide {
+            background: var(--bg-primary);
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .title-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 55%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 87, 34, 0.06) 50%, rgba(255, 87, 34, 0.12) 100%);
+            pointer-events: none;
+        }
+
+        .title-slide::after {
+            content: '';
+            position: absolute;
+            bottom: clamp(2rem, 6vh, 5rem);
+            right: clamp(2rem, 6vw, 5rem);
+            width: clamp(80px, 15vw, 180px);
+            height: clamp(80px, 15vw, 180px);
+            border: 2px solid rgba(255, 87, 34, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .title-kicker {
+            font-size: var(--small-size);
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: clamp(0.5rem, 1.5vh, 1.2rem);
+        }
+
+        .title-main {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            line-height: 1.0;
+            color: var(--text-primary);
+            margin-bottom: clamp(0.5rem, 1.5vh, 1.2rem);
+        }
+
+        .title-sub {
+            font-size: clamp(1rem, 2.5vw, 1.8rem);
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin-bottom: clamp(1rem, 3vh, 2.5rem);
+        }
+
+        .title-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--accent-dim);
+            border: 1px solid rgba(255, 87, 34, 0.3);
+            color: var(--accent);
+            padding: 0.35em 0.9em;
+            border-radius: 100px;
+            font-size: var(--small-size);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .tag.tag-b {
+            background: var(--accent-b-dim);
+            border-color: rgba(67, 97, 238, 0.3);
+            color: var(--accent-b);
+        }
+
+        .tag.tag-c {
+            background: var(--accent-c-dim);
+            border-color: rgba(39, 174, 96, 0.3);
+            color: var(--accent-c);
+        }
+
+        /* ===================================================
+           SECTION HEADER (reused for plan intro slides)
+           ===================================================*/
+        .section-slide {
+            background: var(--bg-primary);
+        }
+
+        .section-big-num {
+            font-family: var(--font-display);
+            font-size: clamp(6rem, 18vw, 16rem);
+            line-height: 0.85;
+            color: rgba(255, 87, 34, 0.08);
+            position: absolute;
+            right: var(--slide-padding);
+            bottom: calc(var(--slide-padding) * 0.5);
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: -0.04em;
+        }
+
+        .section-big-num.b-num {
+            color: rgba(67, 97, 238, 0.08);
+        }
+
+        .section-big-num.c-num {
+            color: rgba(39, 174, 96, 0.08);
+        }
+
+        /* ===================================================
+           STANDARD CONTENT SLIDE
+           ===================================================*/
+        .content-slide {
+            background: var(--bg-primary);
+        }
+
+        .slide-label {
+            font-size: var(--small-size);
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: clamp(0.4rem, 1.2vh, 1rem);
+        }
+
+        .slide-label.lb {
+            color: var(--accent-b);
+        }
+
+        .slide-label.lc {
+            color: var(--accent-c);
+        }
+
+        .slide-h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            color: var(--text-primary);
+            line-height: 1.1;
+            margin-bottom: clamp(0.8rem, 2.5vh, 2rem);
+        }
+
+        /* ===================================================
+           CARD GRID (problems, features)
+           ===================================================*/
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(0.6rem, 1.5vw, 1.2rem);
+        }
+
+        .card-grid.two-col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .card-grid.four-col {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media (max-width:700px) {
+
+            .card-grid,
+            .card-grid.four-col {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: clamp(0.8rem, 2vw, 1.4rem);
+        }
+
+        .info-card .card-icon {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card .card-title {
+            font-size: clamp(0.8rem, 1.6vw, 1.05rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .info-card .card-desc {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .info-card.accent-card {
+            background: var(--accent-dim);
+            border-color: rgba(255, 87, 34, 0.25);
+        }
+
+        .info-card.accent-card .card-title {
+            color: var(--accent);
+        }
+
+        .info-card.b-card {
+            background: var(--accent-b-dim);
+            border-color: rgba(67, 97, 238, 0.25);
+        }
+
+        .info-card.b-card .card-title {
+            color: var(--accent-b);
+        }
+
+        .info-card.c-card {
+            background: var(--accent-c-dim);
+            border-color: rgba(39, 174, 96, 0.25);
+        }
+
+        .info-card.c-card .card-title {
+            color: var(--accent-c);
+        }
+
+        /* ===================================================
+           BULLET LIST
+           ===================================================*/
+        .check-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.4rem, 1.2vh, 0.9rem);
+        }
+
+        .check-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .check-list li .bullet {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-dim);
+            border: 1px solid rgba(255, 87, 34, 0.3);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-top: 0.1em;
+        }
+
+        .check-list li .bullet.b {
+            background: var(--accent-b-dim);
+            border-color: rgba(67, 97, 238, 0.3);
+            color: var(--accent-b);
+        }
+
+        .check-list li .bullet.c {
+            background: var(--accent-c-dim);
+            border-color: rgba(39, 174, 96, 0.3);
+            color: var(--accent-c);
+        }
+
+        .check-list li span:not(.bullet) {
+            flex: 1;
+        }
+
+        /* ===================================================
+           COMPARISON TABLE
+           ===================================================*/
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: clamp(0.65rem, 1.15vw, 0.88rem);
+        }
+
+        .compare-table th {
+            font-family: var(--font-display);
+            font-size: clamp(0.7rem, 1.3vw, 0.95rem);
+            padding: clamp(0.5rem, 1.2vh, 0.9rem) clamp(0.5rem, 1.5vw, 1rem);
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .compare-table th:first-child {
+            text-align: left;
+            color: var(--text-muted);
+        }
+
+        .compare-table th.ha {
+            color: var(--accent);
+        }
+
+        .compare-table th.hb {
+            color: var(--accent-b);
+        }
+
+        .compare-table th.hc {
+            color: var(--accent-c);
+        }
+
+        .compare-table td {
+            padding: clamp(0.4rem, 1vh, 0.7rem) clamp(0.5rem, 1.5vw, 1rem);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .compare-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: clamp(0.65rem, 1.1vw, 0.85rem);
+        }
+
+        .compare-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .compare-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .dot-r {
+            color: #e74c3c;
+        }
+
+        .dot-y {
+            color: #f39c12;
+        }
+
+        .dot-g {
+            color: var(--accent-c);
+        }
+
+        /* ===================================================
+           THREE PLAN OVERVIEW (side-by-side)
+           ===================================================*/
+        .plan-trio {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: clamp(0.6rem, 1.5vw, 1.2rem);
+            align-items: stretch;
+        }
+
+        .plan-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: clamp(1rem, 2.5vw, 1.8rem);
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .plan-card.plan-b::before {
+            background: var(--accent-b);
+        }
+
+        .plan-card.plan-c::before {
+            background: var(--accent-c);
+        }
+
+        .plan-letter {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 4rem);
+            line-height: 1;
+            color: var(--accent);
+        }
+
+        .plan-letter.lb {
+            color: var(--accent-b);
+        }
+
+        .plan-letter.lc {
+            color: var(--accent-c);
+        }
+
+        .plan-name {
+            font-weight: 700;
+            font-size: clamp(0.85rem, 1.6vw, 1.05rem);
+            color: var(--text-primary);
+        }
+
+        .plan-tagline {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .plan-price {
+            font-family: var(--font-display);
+            font-size: clamp(1rem, 2.2vw, 1.6rem);
+            color: var(--accent);
+            margin-top: auto;
+        }
+
+        .plan-price.pb {
+            color: var(--accent-b);
+        }
+
+        .plan-price.pc {
+            color: var(--accent-c);
+        }
+
+        .plan-meta {
+            font-size: var(--small-size);
+            color: var(--text-muted);
+        }
+
+        /* ===================================================
+           ARCHITECTURE DIAGRAM (horizontal flow)
+           ===================================================*/
+        .arch-flow {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+        }
+
+        .arch-box {
+            flex: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: clamp(0.8rem, 2vw, 1.4rem);
+        }
+
+        .arch-box.arch-accent {
+            border-color: rgba(255, 87, 34, 0.4);
+            background: rgba(255, 87, 34, 0.05);
+        }
+
+        .arch-box.arch-b {
+            border-color: rgba(67, 97, 238, 0.4);
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        .arch-arrow {
+            display: flex;
+            align-items: center;
+            padding: 0 clamp(0.4rem, 1vw, 0.8rem);
+            color: var(--text-muted);
+            font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+            flex-shrink: 0;
+        }
+
+        .arch-box-title {
+            font-weight: 700;
+            font-size: clamp(0.78rem, 1.4vw, 1rem);
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .arch-box-title.ta {
+            color: var(--accent);
+        }
+
+        .arch-box-title.tb {
+            color: var(--accent-b);
+        }
+
+        .arch-box ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .arch-box ul li {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            padding-left: 0.8rem;
+            position: relative;
+        }
+
+        .arch-box ul li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        /* ===================================================
+           TIMELINE STEPS
+           ===================================================*/
+        .timeline {
+            display: flex;
+            gap: clamp(0.5rem, 1.5vw, 1rem);
+            align-items: stretch;
+        }
+
+        .timeline-step {
+            flex: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: clamp(0.7rem, 1.8vw, 1.2rem);
+            position: relative;
+        }
+
+        .timeline-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .timeline-step.tb::before {
+            background: var(--accent-b);
+        }
+
+        .timeline-step.tc::before {
+            background: var(--accent-c);
+        }
+
+        .step-phase {
+            font-size: var(--small-size);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+
+        .step-phase.pb {
+            color: var(--accent-b);
+        }
+
+        .step-phase.pc {
+            color: var(--accent-c);
+        }
+
+        .step-title {
+            font-weight: 700;
+            font-size: clamp(0.78rem, 1.3vw, 0.95rem);
+            margin-bottom: 0.4rem;
+        }
+
+        .step-items {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .step-items li {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+        }
+
+        /* ===================================================
+           ROI / NUMBER HIGHLIGHT
+           ===================================================*/
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(0.6rem, 1.5vw, 1.2rem);
+        }
+
+        .roi-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: clamp(0.8rem, 2vw, 1.4rem);
+            text-align: center;
+        }
+
+        .roi-num {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            color: var(--accent);
+            line-height: 1.1;
+        }
+
+        .roi-label {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        /* ===================================================
+           PAYMENT MILESTONES
+           ===================================================*/
+        .milestones {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(0.5rem, 1.2vw, 1rem);
+        }
+
+        .milestone {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: clamp(0.7rem, 1.8vw, 1.2rem);
+            text-align: center;
+            position: relative;
+        }
+
+        .milestone-pct {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .milestone-label {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            margin-top: 0.4rem;
+            line-height: 1.4;
+        }
+
+        .milestone-connector {
+            position: absolute;
+            right: calc(-1 * clamp(0.5rem, 1.2vw, 1rem) / 2);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            z-index: 2;
+        }
+
+        /* ===================================================
+           UPGRADE PATH
+           ===================================================*/
+        .upgrade-flow {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.5rem, 2vw, 1.5rem);
+            justify-content: center;
+        }
+
+        .upgrade-node {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: clamp(0.8rem, 2vw, 1.4rem) clamp(1rem, 2.5vw, 1.8rem);
+            text-align: center;
+            flex: 1;
+            max-width: 220px;
+        }
+
+        .upgrade-node.un-c {
+            border-color: rgba(39, 174, 96, 0.4);
+        }
+
+        .upgrade-node.un-b {
+            border-color: rgba(67, 97, 238, 0.4);
+        }
+
+        .upgrade-node.un-a {
+            border-color: rgba(255, 87, 34, 0.4);
+        }
+
+        .upgrade-node-letter {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+            line-height: 1;
+        }
+
+        .upgrade-node-name {
+            font-weight: 700;
+            font-size: clamp(0.75rem, 1.3vw, 0.95rem);
+            margin: 0.3rem 0;
+        }
+
+        .upgrade-node-note {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .upgrade-arrow {
+            color: var(--text-muted);
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            flex-shrink: 0;
+        }
+
+        /* ===================================================
+           CLOSING SLIDE
+           ===================================================*/
+        .closing-slide {
+            background: var(--bg-primary);
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .closing-cta {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+            padding: 0.85em 2.2em;
+            border-radius: 100px;
+            text-decoration: none;
+            margin-top: clamp(0.8rem, 2.5vh, 2rem);
+            border: none;
+            cursor: pointer;
+        }
+
+        .next-steps {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: clamp(0.6rem, 2vh, 1.5rem);
+        }
+
+        .next-steps li {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .next-steps li::before {
+            content: '→';
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* ===================================================
+           INLINE EDITING
+           ===================================================*/
+        .edit-hotzone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 80px;
+            z-index: 10000;
+            cursor: pointer;
+        }
+
+        .edit-toggle {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 10001;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .edit-toggle.show,
+        .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .edit-toggle.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        [contenteditable="true"] {
+            outline: 1px dashed rgba(255, 87, 34, 0.4);
+            border-radius: 4px;
+            min-width: 1em;
+        }
+
+        .edit-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            z-index: 10000;
+            display: none;
+        }
+
+        .edit-banner.show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <nav class="nav-dots" id="navDots"></nav>
+
+    <!-- INLINE EDIT UI -->
+    <div class="edit-hotzone" id="editHotzone"></div>
+    <button class="edit-toggle" id="editToggle">✏ 編輯</button>
+    <div class="edit-banner" id="editBanner">編輯模式 — 點擊文字即可修改 | Ctrl+S 儲存 | <span
+            style="cursor:pointer;text-decoration:underline;opacity:0.7;" onclick="exportHTML()">📥 匯出 HTML</span> |
+        <span style="cursor:pointer;text-decoration:underline;opacity:0.7;"
+            onclick="if(confirm('清除所有儲存的編輯內容，回復原始 HTML？')){localStorage.removeItem('kgn-slides-v2.1');location.reload();}">清除儲存</span>
+    </div>
+
+
+    <!-- ========== SLIDE 01 — TITLE ========== -->
+    <section class="slide title-slide" id="slide-0">
+        <span class="slide-num">01 / 19</span>
+        <div class="slide-content">
+            <p class="title-kicker reveal">基隆金證Ｎ</p>
+            <h1 class="title-main reveal">數位轉型<br>解決方案</h1>
+            <p class="title-sub reveal">找到最適合您的數位升級路徑</p>
+            <div class="title-tags reveal">
+                <span class="tag">方案 A：全面自建</span>
+                <span class="tag tag-b">方案 B：混合介接</span>
+                <span class="tag tag-c">方案 C：平台導入</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 02 — 現況診斷 ========== -->
+    <section class="slide content-slide" id="slide-1">
+        <span class="slide-num">02 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label reveal">現況診斷</p>
+            <h2 class="slide-h2 reveal">三個各自為政的系統</h2>
+            <div class="card-grid reveal">
+                <div class="info-card">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">易看 ERP</div>
+                    <div class="card-desc">財務帳務、進銷存記錄。門市無法即時查庫存，採購匯率需人工計算。</div>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">🖥️</div>
+                    <div class="card-title">新光 POS</div>
+                    <div class="card-desc">門市收銀。結帳後資料無法自動回填易看，需人工二次登錄。</div>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">📋</div>
+                    <div class="card-title">Google 表單</div>
+                    <div class="card-desc">進貨登記。格式不統一，無法與庫存連動，容易遺漏。</div>
+                </div>
+            </div>
+            <p class="reveal"
+                style="margin-top:clamp(0.6rem,2vh,1.2rem); font-size:var(--body-size); color:var(--text-muted);">
+                任何一筆交易都需要人工在多個系統重複輸入 —— 這是所有問題的根源。
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 03 — 核心痛點 ========== -->
+    <section class="slide content-slide" id="slide-2">
+        <span class="slide-num">03 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label reveal">核心痛點</p>
+            <h2 class="slide-h2 reveal">每天都在發生的損耗</h2>
+            <ul class="check-list">
+                <li class="reveal stagger-1"><span class="bullet">1</span><span><strong>三系統資料孤島</strong> —
+                        ERP、POS、表單各自為政，多數資料都需在多系統手動補登</span></li>
+                <li class="reveal stagger-2"><span class="bullet">2</span><span><strong>POS 超載、人工重工</strong> — 新光 POS
+                        被迫承擔進貨、調撥、批發，每筆交易需二次手動轉打</span></li>
+                <li class="reveal stagger-3"><span class="bullet">3</span><span><strong>庫存即時性極差</strong> —
+                        倉庫與門市無法即時同步，ERP 淪為轉接站，增加多店搶貨時超賣發生之機率</span></li>
+                <li class="reveal stagger-4"><span class="bullet">4</span><span><strong>採購成本全靠人工</strong> — 日幣匯率須 Google
+                        表單手算；採購單無法直接轉單進貨，易生髒資料</span></li>
+                <li class="reveal stagger-5"><span class="bullet">5</span><span><strong>系統老舊無法擴充</strong> — 新光 POS API
+                        封閉，無法靈活對接電子發票、掃碼進貨等新需求</span></li>
+            </ul>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 04 — 解決核心 ========== -->
+    <section class="slide content-slide" id="slide-3">
+        <span class="slide-num">04 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label reveal">解決核心概念</p>
+            <h2 class="slide-h2 reveal">無論哪種方案<br>核心都是 SCM Hub</h2>
+            <div class="arch-flow reveal" style="margin-top:clamp(0.6rem,2vh,1.5rem);">
+                <div class="arch-box">
+                    <div class="arch-box-title">進貨端</div>
+                    <ul>
+                        <li>掃碼進貨</li>
+                        <li>供應商管理</li>
+                        <li>匯率代算</li>
+                    </ul>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-box arch-accent">
+                    <div class="arch-box-title ta">SCM Hub 核心引擎</div>
+                    <ul>
+                        <li>即時庫存狀態</li>
+                        <li>自動會計分錄</li>
+                        <li>多店庫存協調</li>
+                    </ul>
+                </div>
+                <div class="arch-arrow">←</div>
+                <div class="arch-box">
+                    <div class="arch-box-title">門市端</div>
+                    <ul>
+                        <li>iPad POS 收銀</li>
+                        <li>發票機串接</li>
+                        <li>庫存即時查詢</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="reveal"
+                style="margin-top:clamp(0.5rem,1.5vh,1rem); font-size:var(--body-size); color:var(--text-secondary);">
+                三種方案的差異在於：這個核心引擎是<strong style="color:var(--accent)">全新自建</strong>、<strong
+                    style="color:var(--accent-b)">橋接現有易看</strong>，還是<strong
+                    style="color:var(--accent-c)">選用現成平台</strong>。
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 05 — 三方案總覽 ========== -->
+    <section class="slide content-slide" id="slide-4">
+        <span class="slide-num">05 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label reveal">方案總覽</p>
+            <h2 class="slide-h2 reveal">三條路，一個終點</h2>
+            <div class="plan-trio reveal" style="margin-top:clamp(0.6rem,2vh,1.5rem);">
+                <div class="plan-card">
+                    <div class="plan-letter">A</div>
+                    <div class="plan-name">全面自建</div>
+                    <div class="plan-tagline">100% 自有系統，從根本打造專屬的數位資產</div>
+                    <div class="plan-price">18 個月上線</div>
+                    <div class="plan-meta"></div>
+                </div>
+                <div class="plan-card plan-b">
+                    <div class="plan-letter lb">B</div>
+                    <div class="plan-name">混合介接</div>
+                    <div class="plan-tagline">保留易看，加建 SCM 中樞 + 新 POS，快速解決第一線痛點</div>
+                    <div class="plan-price pb">10 個月上線</div>
+                    <div class="plan-meta"></div>
+                </div>
+                <div class="plan-card plan-c">
+                    <div class="plan-letter lc">C</div>
+                    <div class="plan-name">平台導入</div>
+                    <div class="plan-tagline">換用整合型 ERP+POS 平台，全程陪伴上線</div>
+                    <div class="plan-price pc">4–6 個月上線</div>
+                    <div class="plan-meta"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 06 — 方案A介紹 ========== -->
+    <section class="slide section-slide" id="slide-5">
+        <span class="slide-num">06 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label reveal">方案 A</p>
+            <h2 class="slide-h2 reveal" style="font-size:clamp(1.8rem,4.5vw,3.8rem); line-height:1.05;">全面自建<br><span
+                    style="color:var(--accent)">Asset Building</span></h2>
+            <p class="reveal"
+                style="font-size:var(--body-size); color:var(--text-secondary); max-width:520px; line-height:1.6; margin-top:clamp(0.5rem,1.5vh,1rem);">
+                拋棄現有的拼湊系統，打造一套 100% 屬於自己的一體化 ERP、POS 與庫存管理平台——從進貨到結帳，所有資料在同一個系統內即時流動，永遠不需要手動補登。
+            </p>
+            <div class="title-tags reveal" style="margin-top:clamp(0.6rem,2vh,1.5rem);">
+                <span class="tag">iPad 原生 POS</span>
+                <span class="tag">Web ERP</span>
+                <span class="tag">自動分錄</span>
+            </div>
+        </div>
+        <div class="section-big-num">A</div>
+    </section>
+
+
+    <!-- ========== SLIDE 07 — 方案A架構 ========== -->
+    <section class="slide content-slide" id="slide-6">
+        <span class="slide-num">07 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label reveal">方案 A — 系統架構</p>
+            <h2 class="slide-h2 reveal">三元件一體化</h2>
+            <div class="arch-flow reveal" style="margin-top:clamp(0.6rem,2vh,1.5rem);">
+                <div class="arch-box">
+                    <div class="arch-box-title">Web ERP 後台</div>
+                    <ul>
+                        <li>採購 / 進貨 / 銷貨</li>
+                        <li>多供應商管理</li>
+                        <li>日幣匯率自動代算</li>
+                        <li>即時財務報表</li>
+                    </ul>
+                </div>
+                <div class="arch-arrow">⇄</div>
+                <div class="arch-box arch-accent">
+                    <div class="arch-box-title ta">SCM Hub（核心引擎）</div>
+                    <ul>
+                        <li>秒級庫存同步</li>
+                        <li>結帳即自動分錄</li>
+                        <li>多店庫存鎖定</li>
+                        <li>單一真理來源</li>
+                    </ul>
+                </div>
+                <div class="arch-arrow">⇄</div>
+                <div class="arch-box">
+                    <div class="arch-box-title">iPad POS 前端</div>
+                    <ul>
+                        <li>掃碼結帳 3 步完成</li>
+                        <li>發票機 / 掃描槍串接</li>
+                        <li>行動進貨掃碼</li>
+                        <li>離線收銀</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="reveal"
+                style="margin-top:clamp(0.5rem,1.5vh,1rem); font-size:var(--small-size); color:var(--text-muted);">
+                所有資料存於同一資料庫，秒級同步，不再有資料孤島。
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 08 — 方案A解決 ========== -->
+    <section class="slide content-slide" id="slide-7">
+        <span class="slide-num">08 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label reveal">方案 A — 解決清單</p>
+            <h2 class="slide-h2 reveal">每個痛點都有答案</h2>
+            <ul class="check-list">
+                <li class="reveal stagger-1"><span class="bullet">✓</span><span>收銀後補登 →
+                        <strong>結帳即自動過帳，完全消除人工</strong></span></li>
+                <li class="reveal stagger-2"><span class="bullet">✓</span><span>匯率人工計算 →
+                        <strong>系統自動抓匯率代算，採購成本即時準確</strong></span></li>
+                <li class="reveal stagger-3"><span class="bullet">✓</span><span>庫存不透明 →
+                        <strong>即時庫存，精確到秒</strong></span></li>
+                <li class="reveal stagger-4"><span class="bullet">✓</span><span>多店調撥混亂 →
+                        <strong>系統內調撥單，自動更新雙邊庫存</strong></span></li>
+                <li class="reveal stagger-5"><span class="bullet">✓</span><span>API 限制導致介接困難 → <strong>提供符合需求的 API
+                            接口，解決現有痛點，佈局未來發展</strong></span></li>
+            </ul>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 09 — 方案A時程預算 ========== -->
+    <section class="slide content-slide" id="slide-8">
+        <span class="slide-num">09 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label reveal">方案 A — 時程</p>
+            <h2 class="slide-h2 reveal">18 個月完整上線</h2>
+            <div class="timeline reveal" style="margin-top:clamp(0.5rem,1.5vh,1.2rem);">
+                <div class="timeline-step">
+                    <div class="step-phase">Phase 1–2</div>
+                    <div class="step-title">架構 + POC</div>
+                    <ul class="step-items">
+                        <li>需求確認</li>
+                        <li>SCM Hub + 匯率</li>
+                        <li>POC Demo</li>
+                    </ul>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-phase">Phase 3–4</div>
+                    <div class="step-title">ERP + POS 開發</div>
+                    <ul class="step-items">
+                        <li>Web ERP 採購模組</li>
+                        <li>iPad POS App</li>
+                        <li>硬體串接</li>
+                    </ul>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-phase">Phase 5–8</div>
+                    <div class="step-title">整合測試</div>
+                    <ul class="step-items">
+                        <li>資料清洗遷移</li>
+                        <li>壓力測試</li>
+                        <li>人員培訓</li>
+                    </ul>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-phase">Phase 9–12</div>
+                    <div class="step-title">全門市上線</div>
+                    <ul class="step-items">
+                        <li>各門市依序切換</li>
+                        <li>並行觀察期</li>
+                        <li>正式驗收</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="roi-grid reveal" style="margin-top:clamp(0.5rem,1.5vh,1rem);">
+                <div class="roi-box">
+                    <div class="roi-num">完整</div>
+                    <div class="roi-label">全模組開發，功能零妥協</div>
+                </div>
+                <div class="roi-box">
+                    <div class="roi-num">秒級</div>
+                    <div class="roi-label">庫存即時同步，無 API 延遲限制</div>
+                </div>
+                <div class="roi-box">
+                    <div class="roi-num">100%</div>
+                    <div class="roi-label">資料完全自有，不依賴第三方</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 10 — 方案B介紹 ========== -->
+    <section class="slide section-slide" id="slide-9">
+        <span class="slide-num">10 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label lb reveal">方案 B</p>
+            <h2 class="slide-h2 reveal" style="font-size:clamp(1.8rem,4.5vw,3.8rem); line-height:1.05;">混合介接<br><span
+                    style="color:var(--accent-b)">Hybrid Integration</span></h2>
+            <p class="reveal"
+                style="font-size:var(--body-size); color:var(--text-secondary); max-width:520px; line-height:1.6; margin-top:clamp(0.5rem,1.5vh,1rem);">
+                不打掉現有基礎，而是補上缺失的那塊橋梁——在「第一線作業」和「易看財務後台」之間，建立資料同步中樞，讓兩邊自動同步。
+            </p>
+            <div class="title-tags reveal" style="margin-top:clamp(0.6rem,2vh,1.5rem);">
+                <span class="tag tag-b">保留易看 ERP</span>
+                <span class="tag tag-b">新建 SCM Hub</span>
+                <span class="tag tag-b">新 iPad POS</span>
+            </div>
+        </div>
+        <div class="section-big-num b-num">B</div>
+    </section>
+
+
+    <!-- ========== SLIDE 11 — 方案B架構 ========== -->
+    <section class="slide content-slide" id="slide-10">
+        <span class="slide-num">11 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label lb reveal">方案 B — 架構</p>
+            <h2 class="slide-h2 reveal">橋接，不取代</h2>
+            <div class="arch-flow reveal" style="margin-top:clamp(0.6rem,2vh,1.5rem);">
+                <div class="arch-box">
+                    <div class="arch-box-title">易看 ERP（保留）</div>
+                    <ul>
+                        <li>財務帳務不變</li>
+                        <li>供應商 / 採購</li>
+                        <li>員工操作習慣不變</li>
+                    </ul>
+                </div>
+                <div class="arch-arrow">⇄</div>
+                <div class="arch-box arch-b">
+                    <div class="arch-box-title tb">SCM Hub（新建）</div>
+                    <ul>
+                        <li>每 15 分鐘同步庫存</li>
+                        <li>銷售即時回寫易看</li>
+                        <li>進貨掃碼自動入帳</li>
+                    </ul>
+                </div>
+                <div class="arch-arrow">⇄</div>
+                <div class="arch-box">
+                    <div class="arch-box-title">新 iPad POS（新建）</div>
+                    <ul>
+                        <li>輕量化 SwiftUI App</li>
+                        <li>發票機 / 掃描槍</li>
+                        <li>離線收銀快取</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="reveal"
+                style="margin-top:clamp(0.5rem,1.5vh,1rem); font-size:var(--small-size); color:var(--text-muted);">
+                易看 API 已確認：品項查詢、庫存快照、銷貨單/進貨單回寫均已有對應端點。
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 12 — 方案B時程預算 ========== -->
+    <section class="slide content-slide" id="slide-11">
+        <span class="slide-num">12 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label lb reveal">方案 B — 時程</p>
+            <h2 class="slide-h2 reveal">10 個月上線</h2>
+            <div class="timeline reveal" style="margin-top:clamp(0.5rem,1.5vh,1.2rem);">
+                <div class="timeline-step tb">
+                    <div class="step-phase pb">Phase 1</div>
+                    <div class="step-title">基礎建設</div>
+                    <ul class="step-items">
+                        <li>SCM Hub 開發</li>
+                        <li>易看 API 串接測試</li>
+                        <li>商品 / 庫存同步驗證</li>
+                    </ul>
+                </div>
+                <div class="timeline-step tb">
+                    <div class="step-phase pb">Phase 2</div>
+                    <div class="step-title">功能完善</div>
+                    <ul class="step-items">
+                        <li>進貨掃碼上線</li>
+                        <li>發票機串接</li>
+                        <li>首門市試點上線</li>
+                    </ul>
+                </div>
+                <div class="timeline-step tb">
+                    <div class="step-phase pb">Phase 3</div>
+                    <div class="step-title">全面上線</div>
+                    <ul class="step-items">
+                        <li>全門市部署</li>
+                        <li>資料對帳確認</li>
+                        <li>正式驗收</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="roi-grid reveal"
+                style="margin-top:clamp(0.5rem,1.5vh,1rem); grid-template-columns:repeat(3,1fr);">
+                <div class="roi-box">
+                    <div class="roi-num" style="color:var(--accent-b)">保留</div>
+                    <div class="roi-label">易看帳務操作習慣不變，人員零學習成本</div>
+                </div>
+                <div class="roi-box">
+                    <div class="roi-num" style="color:var(--accent-b)">15分鐘</div>
+                    <div class="roi-label">庫存同步週期（易看 API 限制）</div>
+                </div>
+                <div class="roi-box">
+                    <div class="roi-num" style="color:var(--accent-b)">可升級</div>
+                    <div class="roi-label">POS 元件直接複用，日後升級方案 A 不重做</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 13 — 方案C介紹 ========== -->
+    <section class="slide section-slide" id="slide-12">
+        <span class="slide-num">13 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label lc reveal">方案 C</p>
+            <h2 class="slide-h2 reveal" style="font-size:clamp(1.8rem,4.5vw,3.8rem); line-height:1.05;">平台導入<br><span
+                    style="color:var(--accent-c)">Implementation Consulting</span></h2>
+            <p class="reveal"
+                style="font-size:var(--body-size); color:var(--text-secondary); max-width:520px; line-height:1.6; margin-top:clamp(0.5rem,1.5vh,1rem);">
+                我們扮演「選品專家 + 搬家師傅」——幫您找到最適合的整合型 ERP+POS 平台，全程處理資料搬遷、系統設定與員工培訓。
+            </p>
+            <div class="title-tags reveal" style="margin-top:clamp(0.6rem,2vh,1.5rem);">
+                <span class="tag tag-c">平台選型</span>
+                <span class="tag tag-c">資料遷移</span>
+                <span class="tag tag-c">培訓上線</span>
+                <span class="tag tag-c">3個月監管</span>
+            </div>
+        </div>
+        <div class="section-big-num c-num">C</div>
+    </section>
+
+
+    <!-- ========== SLIDE 14 — 方案C服務 ========== -->
+    <section class="slide content-slide" id="slide-13">
+        <span class="slide-num">14 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label lc reveal">方案 C — 服務時程</p>
+            <h2 class="slide-h2 reveal">4–6 個月完成</h2>
+            <div class="timeline reveal" style="margin-top:clamp(0.5rem,1.5vh,1.2rem);">
+                <div class="timeline-step tc">
+                    <div class="step-phase pc">Phase 1</div>
+                    <div class="step-title">平台評選</div>
+                    <ul class="step-items">
+                        <li>需求確認</li>
+                        <li>陪同廠商 Demo</li>
+                        <li>推薦最適平台</li>
+                    </ul>
+                </div>
+                <div class="timeline-step tc">
+                    <div class="step-phase pc">Phase 2</div>
+                    <div class="step-title">資料搬遷</div>
+                    <ul class="step-items">
+                        <li>易看資料清洗</li>
+                        <li>歷史資料匯入</li>
+                        <li>流程設定</li>
+                    </ul>
+                </div>
+                <div class="timeline-step tc">
+                    <div class="step-phase pc">Phase 3</div>
+                    <div class="step-title">培訓 + 上線</div>
+                    <ul class="step-items">
+                        <li>操作手冊</li>
+                        <li>現場實機演練</li>
+                        <li>正式切換</li>
+                    </ul>
+                </div>
+                <div class="timeline-step tc">
+                    <div class="step-phase pc">Phase 4</div>
+                    <div class="step-title">後續追蹤</div>
+                    <ul class="step-items">
+                        <li>廠商服務監控</li>
+                        <li>問題協調</li>
+                        <li>SCM 補強評估</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="roi-grid reveal"
+                style="margin-top:clamp(0.5rem,1.5vh,1rem); grid-template-columns:repeat(3,1fr);">
+                <div class="roi-box">
+                    <div class="roi-num" style="color:var(--accent-c)">最快</div>
+                    <div class="roi-label">2–3 個月完成系統切換</div>
+                </div>
+                <div class="roi-box">
+                    <div class="roi-num" style="color:var(--accent-c)">零開發</div>
+                    <div class="roi-label">使用現成平台，無技術開發負擔</div>
+                </div>
+                <div class="roi-box">
+                    <div class="roi-num" style="color:var(--accent-c)">最低</div>
+                    <div class="roi-label">技術開發風險</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 15 — 深度比較矩陣 ========== -->
+    <section class="slide content-slide" id="slide-14">
+        <span class="slide-num">15 / 19</span>
+        <div class="slide-content" style="justify-content:center;">
+            <p class="slide-label reveal">深度比較</p>
+            <h2 class="slide-h2 reveal" style="margin-bottom:clamp(0.4rem,1vh,0.8rem);">七個維度，完整對比</h2>
+            <div class="reveal" style="overflow:hidden;">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th>評估維度</th>
+                            <th class="ha">方案 A 全面自建</th>
+                            <th class="hb">方案 B 混合介接</th>
+                            <th class="hc">方案 C 平台導入</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>初期建置費用</td>
+                            <td><span class="dot-r">●</span> 高</td>
+                            <td><span class="dot-y">●</span> 中</td>
+                            <td><span class="dot-g">●</span> 低</td>
+                        </tr>
+                        <tr>
+                            <td>上線時程</td>
+                            <td><span class="dot-r">●</span> 18 個月</td>
+                            <td><span class="dot-y">●</span> 10 個月</td>
+                            <td><span class="dot-g">●</span> 4–6 個月</td>
+                        </tr>
+                        <tr>
+                            <td>資料掌控度</td>
+                            <td><span class="dot-g">●</span> 100% 自有</td>
+                            <td><span class="dot-y">●</span> 部分自有</td>
+                            <td><span class="dot-r">●</span> 依賴供應商</td>
+                        </tr>
+                        <tr>
+                            <td>客製化彈性</td>
+                            <td><span class="dot-g">●</span> 完全客製</td>
+                            <td><span class="dot-y">●</span> 第一線可客製</td>
+                            <td><span class="dot-r">●</span> 受平台限制</td>
+                        </tr>
+                        <tr>
+                            <td>匯率自動代算</td>
+                            <td><span class="dot-g">●</span> 完整支援</td>
+                            <td><span class="dot-r">●</span> 依易看功能</td>
+                            <td><span class="dot-r">●</span> 依平台功能</td>
+                        </tr>
+                        <tr>
+                            <td>員工學習成本</td>
+                            <td><span class="dot-r">●</span> 全部重新學</td>
+                            <td><span class="dot-g">●</span> 易看操作不變</td>
+                            <td><span class="dot-r">●</span> 全部重新學</td>
+                        </tr>
+                        <tr>
+                            <td>技術開發風險</td>
+                            <td><span class="dot-r">●</span> 高（全新開發）</td>
+                            <td><span class="dot-y">●</span> 中（核心元件新建）</td>
+                            <td><span class="dot-g">●</span> 低（平台已成熟）</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 16 — 戰略選擇 ========== -->
+    <section class="slide content-slide" id="slide-15">
+        <span class="slide-num">16 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label reveal">戰略思考</p>
+            <h2 class="slide-h2 reveal">3 年後，您擁有什麼？</h2>
+            <div class="card-grid reveal" style="margin-top:clamp(0.6rem,2vh,1.5rem);">
+                <div class="info-card accent-card">
+                    <div class="card-icon">🏆</div>
+                    <div class="card-title">方案 A — 自有資產</div>
+                    <div class="card-desc">✅ 功能擴充自由<br>✅ 新模組隨業務成長加入<br>✅ 完全客製，零架構妥協<br>✅ 資料完全可攜</div>
+                </div>
+                <div class="info-card b-card">
+                    <div class="card-icon">🔗</div>
+                    <div class="card-title">方案 B — 橋接依賴</div>
+                    <div class="card-desc">🟡 受易看 API 版本制約<br>🟡 新功能受橋接架構限制<br>🟡 升級需重建核心元件<br>🟡 擴展彈性逐步收窄</div>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">🔒</div>
+                    <div class="card-title">方案 C — 平台鎖定</div>
+                    <div class="card-desc">🔴 功能由供應商路線圖決定<br>🔴 客製空間受平台限制<br>🔴 遷出重構成本高<br>🔴 業務需求無法主動因應</div>
+                </div>
+            </div>
+            <p class="reveal"
+                style="margin-top:clamp(0.5rem,1.5vh,1rem); font-size:var(--body-size); color:var(--text-secondary); text-align:center;">
+                以 POC 驗證核心能力，以方案 A 為戰略終點——<strong style="color:var(--accent)">最低初期風險，最高長期回報。</strong>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 17 — POC ========== -->
+    <section class="slide content-slide" id="slide-poc">
+        <span class="slide-num">17 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label reveal">能力驗證</p>
+            <h2 class="slide-h2 reveal">POC 展示，我們準備好了</h2>
+            <div class="card-grid reveal" style="margin-top:clamp(0.6rem,2vh,1.5rem);">
+                <div class="info-card">
+                    <div class="card-icon">📦</div>
+                    <div class="card-title">進銷存 × 多店調撥</div>
+                    <div class="card-desc">即時庫存狀態、跨門市調撥自動同步</div>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">🖥️</div>
+                    <div class="card-title">POS 收銀介面</div>
+                    <div class="card-desc">iPad 原生體驗、完整收銀流程展示</div>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-title">核心功能驗證</div>
+                    <div class="card-desc">匯率展示、權限管理、預購流程、稽核日誌</div>
+                </div>
+            </div>
+            <p class="reveal"
+                style="margin-top:clamp(0.5rem,1.5vh,1rem); font-size:var(--body-size); color:var(--text-secondary); text-align:center;">
+                POC 完成後，可基於<strong style="color:var(--accent)">真實操作體驗</strong>做出最終方案決策。
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 18 — 付款里程碑 ========== -->
+    <section class="slide content-slide" id="slide-16">
+        <span class="slide-num">18 / 19</span>
+        <div class="slide-content">
+            <p class="slide-label reveal">付款計劃</p>
+            <h2 class="slide-h2 reveal">分階段驗收，降低企業壓力</h2>
+            <div class="milestones reveal" style="margin-top:clamp(0.8rem,2.5vh,2rem);">
+                <div class="milestone">
+                    <div class="milestone-pct">20%</div>
+                    <div class="milestone-label">合約簽署<br>Phase 1 啟動</div>
+                </div>
+                <div class="milestone">
+                    <div class="milestone-pct">30%</div>
+                    <div class="milestone-label">SCM 中樞驗收<br>庫存同步確認</div>
+                </div>
+                <div class="milestone">
+                    <div class="milestone-pct">30%</div>
+                    <div class="milestone-label">首門市試行上線<br>硬體串接完成</div>
+                </div>
+                <div class="milestone">
+                    <div class="milestone-pct">20%</div>
+                    <div class="milestone-label">全門市上線<br>UAT 通過</div>
+                </div>
+            </div>
+            <p class="reveal"
+                style="margin-top:clamp(0.6rem,2vh,1.2rem); font-size:var(--small-size); color:var(--text-muted);">
+                每一筆款項對應一個明確的驗收里程碑，功能未達標不付款。
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ========== SLIDE 19 — 結語 ========== -->
+    <section class="slide closing-slide" id="slide-17">
+        <span class="slide-num">19 / 19</span>
+        <div class="slide-content">
+            <p class="title-kicker reveal">下一步</p>
+            <h2 class="slide-h2 reveal" style="font-size:clamp(1.6rem,4vw,3.2rem); line-height:1.1;">
+                決定解決方案<br><span style="color:var(--accent)">進行深度討論</span>
+            </h2>
+            <ul class="next-steps reveal">
+                <li><strong>安排需求訪談</strong> — 1.5 小時確認現有業務流程、資料遷移範圍與優先模組順序</li>
+                <li><strong>準備合約簽署</strong> — 逐項確認交付里程碑、付款節點與保固條款</li>
+                <li><strong>開始模組化開發</strong> — 以 POC 為起點，核心模組優先上線，分批降低風險</li>
+            </ul>
+        </div>
+    </section>
+
+
+    <!-- ===================================================
+     JAVASCRIPT — SLIDE CONTROLLER + INLINE EDITING
+     =================================================== -->
+    <script>
+        /* === SLIDE PRESENTATION CONTROLLER === */
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.totalSlides = this.slides.length;
+                this.currentIdx = 0;
+                this.isScrolling = false;
+
+                this.progressBar = document.getElementById('progressBar');
+                this.navDotsEl = document.getElementById('navDots');
+
+                this.buildNavDots();
+                this.setupObserver();
+                this.setupKeyboard();
+                this.setupTouch();
+                this.setupWheel();
+                this.updateProgress(0);
+            }
+
+            buildNavDots() {
+                for (let i = 0; i < this.totalSlides; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = 'nav-dot' + (i === 0 ? ' active' : '');
+                    btn.setAttribute('aria-label', `投影片 ${i + 1}`);
+                    btn.addEventListener('click', () => this.goTo(i));
+                    this.navDotsEl.appendChild(btn);
+                }
+            }
+
+            setupObserver() {
+                const opts = { root: null, threshold: 0.5 };
+                const obs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            const idx = Array.from(this.slides).indexOf(entry.target);
+                            this.currentIdx = idx;
+                            this.updateDots(idx);
+                            this.updateProgress(idx);
+                        }
+                    });
+                }, opts);
+                this.slides.forEach(s => obs.observe(s));
+            }
+
+            updateDots(idx) {
+                document.querySelectorAll('.nav-dot').forEach((d, i) => {
+                    d.classList.toggle('active', i === idx);
+                });
+            }
+
+            updateProgress(idx) {
+                const pct = ((idx) / (this.totalSlides - 1)) * 100;
+                this.progressBar.style.width = pct + '%';
+            }
+
+            goTo(idx) {
+                if (idx < 0 || idx >= this.totalSlides) return;
+                this.slides[idx].scrollIntoView({ behavior: 'smooth' });
+            }
+
+            setupKeyboard() {
+                document.addEventListener('keydown', (e) => {
+                    if (editor.isActive && e.target.getAttribute('contenteditable')) return;
+                    const map = {
+                        'ArrowDown': 1, 'ArrowRight': 1, 'PageDown': 1, ' ': 1,
+                        'ArrowUp': -1, 'ArrowLeft': -1, 'PageUp': -1
+                    };
+                    if (map[e.key] !== undefined) {
+                        e.preventDefault();
+                        this.goTo(this.currentIdx + map[e.key]);
+                    }
+                    if (e.key === 'Home') { e.preventDefault(); this.goTo(0); }
+                    if (e.key === 'End') { e.preventDefault(); this.goTo(this.totalSlides - 1); }
+                });
+            }
+
+            setupTouch() {
+                let startY = 0, startX = 0;
+                document.addEventListener('touchstart', e => {
+                    startY = e.touches[0].clientY;
+                    startX = e.touches[0].clientX;
+                }, { passive: true });
+                document.addEventListener('touchend', e => {
+                    const dy = startY - e.changedTouches[0].clientY;
+                    const dx = startX - e.changedTouches[0].clientX;
+                    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 40) {
+                        this.goTo(this.currentIdx + (dy > 0 ? 1 : -1));
+                    }
+                }, { passive: true });
+            }
+
+            setupWheel() {
+                let lastWheel = 0;
+                document.addEventListener('wheel', (e) => {
+                    const now = Date.now();
+                    if (now - lastWheel < 800) return;
+                    lastWheel = now;
+                    this.goTo(this.currentIdx + (e.deltaY > 0 ? 1 : -1));
+                }, { passive: true });
+            }
+        }
+
+        /* === INLINE EDITOR === */
+        class InlineEditor {
+            constructor() {
+                this.isActive = false;
+                this.editables = [];
+                this.STORAGE_KEY = 'kgn-slides-v2.1';
+
+                this.toggle = document.getElementById('editToggle');
+                this.hotzone = document.getElementById('editHotzone');
+                this.banner = document.getElementById('editBanner');
+                let hideTimeout = null;
+
+                // Load saved content
+                this.loadSaved();
+
+                // Hotzone hover
+                this.hotzone.addEventListener('mouseenter', () => {
+                    clearTimeout(hideTimeout);
+                    this.toggle.classList.add('show');
+                });
+                this.hotzone.addEventListener('mouseleave', () => {
+                    hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.toggle.classList.remove('show');
+                    }, 400);
+                });
+                this.toggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+                this.toggle.addEventListener('mouseleave', () => {
+                    hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.toggle.classList.remove('show');
+                    }, 400);
+                });
+
+                // Click
+                this.hotzone.addEventListener('click', () => this.toggleEditMode());
+                this.toggle.addEventListener('click', () => this.toggleEditMode());
+
+                // Keyboard E
+                document.addEventListener('keydown', (e) => {
+                    if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable'))
+                        this.toggleEditMode();
+                    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                        e.preventDefault();
+                        this.save();
+                        this.flashBanner('已儲存 ✓');
+                    }
+                });
+            }
+
+            toggleEditMode() {
+                this.isActive = !this.isActive;
+                this.toggle.classList.toggle('active', this.isActive);
+                this.toggle.classList.add('show');
+                this.toggle.textContent = this.isActive ? '✓ 完成編輯' : '✏ 編輯';
+                this.banner.classList.toggle('show', this.isActive);
+
+                if (this.isActive) {
+                    this.enableEditing();
+                } else {
+                    this.disableEditing();
+                    this.save();
+                }
+            }
+
+            enableEditing() {
+                const sel = 'h1,h2,p,li span,td,.card-title,.card-desc,.plan-name,.plan-tagline,.plan-price,.plan-meta,.roi-num,.roi-label,.step-title,.milestone-label,.upgrade-node-name,.upgrade-node-note,.title-kicker,.slide-label,.title-sub';
+                this.editables = document.querySelectorAll(sel);
+                this.editables.forEach(el => {
+                    el.setAttribute('contenteditable', 'true');
+                    el.setAttribute('spellcheck', 'false');
+                });
+            }
+
+            disableEditing() {
+                document.querySelectorAll('[contenteditable]').forEach(el => {
+                    el.removeAttribute('contenteditable');
+                });
+            }
+
+            save() {
+                const data = {};
+                document.querySelectorAll('[data-eid]').forEach(el => {
+                    data[el.dataset.eid] = el.innerHTML;
+                });
+                // Save all slide HTML
+                const slides = {};
+                document.querySelectorAll('.slide').forEach((s, i) => {
+                    slides[i] = s.innerHTML;
+                });
+                localStorage.setItem(this.STORAGE_KEY, JSON.stringify(slides));
+            }
+
+            loadSaved() {
+                try {
+                    const saved = localStorage.getItem(this.STORAGE_KEY);
+                    if (saved) {
+                        const slides = JSON.parse(saved);
+                        document.querySelectorAll('.slide').forEach((s, i) => {
+                            if (slides[i]) s.innerHTML = slides[i];
+                        });
+                    }
+                } catch (e) { }
+            }
+
+            flashBanner(msg) {
+                this.banner.textContent = msg;
+                this.banner.classList.add('show');
+                setTimeout(() => {
+                    if (!this.isActive) this.banner.classList.remove('show');
+                    else this.banner.textContent = '編輯模式 — 點擊文字即可修改 | Ctrl+S 儲存';
+                }, 1500);
+            }
+        }
+
+        const editor = new InlineEditor();
+        const presentation = new SlidePresentation();
+
+        function exportHTML() {
+            // Remove contenteditable attributes before export
+            const clone = document.documentElement.cloneNode(true);
+            clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+            // Remove edit UI elements from export
+            ['editToggle', 'editBanner', 'editHotzone'].forEach(id => {
+                const el = clone.querySelector('#' + id);
+                if (el) el.remove();
+            });
+            const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+            const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'KGN-Solution-Proposals-v2-edited.html';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+    </script>
+</body>
+
+</html>
